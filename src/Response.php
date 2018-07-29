@@ -53,7 +53,7 @@ class Response
 		foreach ($responseHeaderLines as $headerLine) {
 			try {
 				$header = Header::fromString($headerLine);
-				$response->headers[$header->getName()] = $header;
+				$response->headers[$header->name()] = $header;
 			} catch (\InvalidArgumentException $e) {
 				if (preg_match('~^HTTP\/([\d\.]*)\ (\d{3})\ (.*)$~', $headerLine, $matches)) {
 					$response->protocolVersion = $matches[1];
@@ -90,7 +90,7 @@ class Response
 		$headers = '';
 		/** @var Header $header */
 		foreach ($this->headers as $header) {
-			$headers .= $header->getValueLine();
+			$headers .= $header->valueLine();
 		}
 
 		return 'HTTP/' . $this->protocolVersion . ' ' . $this->status() . ' ' . $this->status_message . "\r\n"

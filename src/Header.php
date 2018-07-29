@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Rokde\HttpClient;
-
 
 class Header
 {
@@ -16,6 +14,10 @@ class Header
 	 */
 	protected $value = [];
 
+	/**
+	 * @param string $name
+	 * @param null $value
+	 */
 	public function __construct(string $name, $value = null)
 	{
 		$this->name = strtolower($name);
@@ -27,6 +29,12 @@ class Header
 		}
 	}
 
+	/**
+	 * factory creation
+	 *
+	 * @param string $string
+	 * @return Header
+	 */
 	public static function fromString(string $string): self
 	{
 		if (strpos($string, ':') === false) {
@@ -38,12 +46,12 @@ class Header
 		return new static(trim($parts[0]), trim($parts[1]));
 	}
 
-	public function getName(): string
+	public function name(): string
 	{
 		return $this->name;
 	}
 
-	public function getValue(): array
+	public function value(): array
 	{
 		return $this->value;
 	}
@@ -62,11 +70,11 @@ class Header
 		return $this;
 	}
 
-	public function getValueLine(): string
+	public function valueLine(): string
 	{
 		$line = '';
 		foreach ($this->value as $value) {
-			$line .= $this->getName() . ': ' . $value . "\r\n";
+			$line .= $this->name() . ': ' . $value . "\r\n";
 		}
 
 		return $line;
@@ -74,6 +82,6 @@ class Header
 
 	public function __toString()
 	{
-		return $this->getValueLine();
+		return $this->valueLine();
 	}
 }

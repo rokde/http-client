@@ -172,7 +172,7 @@ class Request
 			$header->addValue($value);
 		}
 
-		$this->headers[$header->getName()] = $header;
+		$this->headers[$header->name()] = $header;
 
 		return $this;
 	}

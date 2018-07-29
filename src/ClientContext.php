@@ -248,7 +248,7 @@ class ClientContext
 
 		/** @var Header $header */
 		foreach ($headers as $header) {
-			$headerline .= $header->getValueLine();
+			$headerline .= $header->valueLine();
 		}
 
 		return $headerline;

@@ -8,8 +8,8 @@ class HeaderTest extends \PHPUnit\Framework\TestCase
 	{
 		$header = \Rokde\HttpClient\Header::fromString('Date: Sun, 29 Jul 2018 09:58:18 GMT');
 
-		$this->assertEquals('date', $header->getName());
-		$this->assertEquals('Sun, 29 Jul 2018 09:58:18 GMT', $header->getValue()[0]);
+		$this->assertEquals('date', $header->name());
+		$this->assertEquals('Sun, 29 Jul 2018 09:58:18 GMT', $header->value()[0]);
 	}
 
 	/** @test */
