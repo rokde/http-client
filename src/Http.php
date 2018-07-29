@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Rokde\HttpClient;
 
 /**
