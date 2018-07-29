@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Rokde\HttpClient;
-
 
 class Response
 {
