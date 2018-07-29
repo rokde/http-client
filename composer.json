@@ -3,7 +3,8 @@
     "description": "A http client library without any dependencies. Just vanilla php.",
     "type": "library",
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "psr/http-message": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.2"
