@@ -11,20 +11,43 @@ class Response
 	 */
 	private $content;
 
+	/**
+	 * @var array|Header[] header collection
+	 */
 	private $headers = [];
 
+	/**
+	 * @var int initial response status code
+	 */
 	private $status = 0;
+
+	/**
+	 * @var null|string inital response status message
+	 */
 	private $status_message = null;
 
+	/**
+	 * @var string initial protocal version
+	 */
 	private $protocolVersion;
 
+	/**
+	 * do not instantiate it directly
+	 */
 	private function __construct()
 	{
 	}
 
+	/**
+	 * factory creation of a response
+	 *
+	 * @param array $responseHeaderLines
+	 * @param string $content
+	 * @return Response
+	 */
 	public static function create(array $responseHeaderLines, string $content): self
 	{
-		$response = new Response();
+		$response = new static();
 		$response->content = $content;
 
 		foreach ($responseHeaderLines as $headerLine) {
@@ -80,17 +103,17 @@ class Response
 		return $this->status() >= 200 && $this->status() < 300;
 	}
 
-	function isRedirect()
+	function isRedirect(): bool
 	{
 		return $this->status() >= 300 && $this->status() < 400;
 	}
 
-	function isClientError()
+	function isClientError(): bool
 	{
 		return $this->status() >= 400 && $this->status() < 500;
 	}
 
-	function isServerError()
+	function isServerError(): bool
 	{
 		return $this->status() >= 500;
 	}
