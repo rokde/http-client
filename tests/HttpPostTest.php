@@ -10,7 +10,7 @@ class HttpPostTest extends \PHPUnit\Framework\TestCase
 
 		$request = new \Rokde\HttpClient\Request('https://httpbin.org/post', 'POST');
 		$request->asForm()
-			->withBody(http_build_query([
+			->setBody(http_build_query([
 				'input1' => 'value1'
 			]));
 

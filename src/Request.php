@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Rokde\HttpClient;
-
 
 class Request
 {
@@ -34,13 +32,13 @@ class Request
 	public function __construct(string $url = null, string $method = 'GET', array $headers = [])
 	{
 		if ($url !== null) {
-			$this->withUri($url);
+			$this->setUri($url);
 		}
 
-		$this->withMethod($method);
+		$this->setMethod($method);
 
 		foreach ($headers as $name => $value) {
-			$this->withHeader($name, $value);
+			$this->setHeader($name, $value);
 		}
 	}
 
@@ -51,7 +49,7 @@ class Request
 	 *
 	 * @return string HTTP protocol version.
 	 */
-	public function getProtocolVersion(): string
+	public function protocolVersion(): string
 	{
 		return $this->protocolVersion;
 	}
@@ -69,7 +67,7 @@ class Request
 	 * @param string $version HTTP protocol version
 	 * @return static
 	 */
-	public function withProtocolVersion(string $version): self
+	public function setProtocolVersion(string $version): self
 	{
 		$this->protocolVersion = $version;
 
@@ -101,7 +99,7 @@ class Request
 	 *     key MUST be a header name, and each value MUST be an array of strings
 	 *     for that header.
 	 */
-	public function getHeaders(): array
+	public function headers(): array
 	{
 		return $this->headers;
 	}
@@ -135,7 +133,7 @@ class Request
 	 *    header. If the header does not appear in the message, this method MUST
 	 *    return an empty array.
 	 */
-	public function getHeader($name): ?array
+	public function header($name): ?array
 	{
 		$name = $this->unifyHeaderName($name);
 
@@ -157,7 +155,7 @@ class Request
 	 * @return static
 	 * @throws \InvalidArgumentException for invalid header names or values.
 	 */
-	public function withHeader(string $name, $value = null): self
+	public function setHeader(string $name, $value = null): self
 	{
 		if ($value === null) {
 			// header strings given: e.g. "Content-Type: application/json"
@@ -202,7 +200,7 @@ class Request
 	 *
 	 * @return String|null Returns the body as a stream.
 	 */
-	public function getBody(): ?string
+	public function body(): ?string
 	{
 		return $this->content;
 	}
@@ -220,7 +218,7 @@ class Request
 	 * @return static
 	 * @throws \InvalidArgumentException When the body is not valid.
 	 */
-	public function withBody(?string $body): self
+	public function setBody(?string $body): self
 	{
 		$this->content = $body;
 
@@ -232,7 +230,7 @@ class Request
 	 *
 	 * @return string Returns the request method.
 	 */
-	public function getMethod(): string
+	public function method(): string
 	{
 		return $this->method;
 	}
@@ -252,7 +250,7 @@ class Request
 	 * @return static
 	 * @throws \InvalidArgumentException for invalid HTTP methods.
 	 */
-	public function withMethod(string $method): self
+	public function setMethod(string $method): self
 	{
 		$this->method = strtoupper($method);
 
@@ -268,7 +266,7 @@ class Request
 	 * @return Uri Returns a UriInterface instance
 	 *     representing the URI of the request.
 	 */
-	public function getUri(): Uri
+	public function uri(): Uri
 	{
 		return $this->uri;
 	}
@@ -303,7 +301,7 @@ class Request
 	 * @param bool $preserveHost Preserve the original state of the Host header.
 	 * @return static
 	 */
-	public function withUri($uri, $preserveHost = false): self
+	public function setUri($uri, $preserveHost = false): self
 	{
 		if ($preserveHost && $this->uri instanceof Uri) {
 			$currentUri = $this->uri;
@@ -320,17 +318,17 @@ class Request
 
 	public function asJson(): self
 	{
-		return $this->withHeader('Content-Type', 'application/json');
+		return $this->setHeader('Content-Type', 'application/json');
 	}
 
 	public function asForm(): self
 	{
-		return $this->withHeader('Content-Type', 'application/x-www-form-urlencoded');
+		return $this->setHeader('Content-Type', 'application/x-www-form-urlencoded');
 	}
 
 	public function accept(string $contentType): self
 	{
-		return $this->withHeader('Accept', $contentType);
+		return $this->setHeader('Accept', $contentType);
 	}
 
 	/**
@@ -342,10 +340,10 @@ class Request
 	public function get($url = null): self
 	{
 		if ($url !== null) {
-			$this->withUri($url);
+			$this->setUri($url);
 		}
 
-		return $this->withMethod('GET');
+		return $this->setMethod('GET');
 	}
 
 	/**
@@ -358,7 +356,7 @@ class Request
 	public function post(array $data, $url = null): self
 	{
 		if ($url !== null) {
-			$this->withUri($url);
+			$this->setUri($url);
 		}
 
 		return $this->presetFormBasedRequests('POST', $data);
@@ -374,7 +372,7 @@ class Request
 	public function put(array $data, $url = null): self
 	{
 		if ($url !== null) {
-			$this->withUri($url);
+			$this->setUri($url);
 		}
 
 		return $this->presetFormBasedRequests('PUT', $data);
@@ -390,7 +388,7 @@ class Request
 	public function patch(array $data, $url = null): self
 	{
 		if ($url !== null) {
-			$this->withUri($url);
+			$this->setUri($url);
 		}
 
 		return $this->presetFormBasedRequests('PATCH', $data);
@@ -406,21 +404,21 @@ class Request
 	public function delete($url = null, array $data = null): self
 	{
 		if ($url !== null) {
-			$this->withUri($url);
+			$this->setUri($url);
 		}
 
 		if ($data !== null) {
 			return $this->presetFormBasedRequests('DELETE', $data);
 		}
 
-		return $this->withMethod('DELETE')->withBody(null);
+		return $this->setMethod('DELETE')->setBody(null);
 	}
 
 	private function presetFormBasedRequests(string $method, array $data): self
 	{
-		return $this->withMethod($method)
+		return $this->setMethod($method)
 			->asForm()
-			->withBody(http_build_query($data));
+			->setBody(http_build_query($data));
 	}
 
 	/**

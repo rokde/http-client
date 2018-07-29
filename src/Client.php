@@ -32,12 +32,12 @@ class Client
 		$this->context = ClientContext::createFromRequest($request)
 			->setUserAgent($this->user_agent);
 
-		$content = $request->getBody();
-		if ($content !== null || in_array($request->getMethod(), ['POST', 'PUT', 'PATCH', 'DELETE'])) {
+		$content = $request->body();
+		if ($content !== null || in_array($request->method(), ['POST', 'PUT', 'PATCH', 'DELETE'])) {
 			$this->context->setContent($content);
 		}
 
-		$fp = fopen((string)$request->getUri(), 'r', false, $this->context->asContext());
+		$fp = fopen((string)$request->uri(), 'r', false, $this->context->asContext());
 
 		$result = '';
 		while(!feof($fp)) {

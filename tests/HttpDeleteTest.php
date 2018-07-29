@@ -10,7 +10,7 @@ class HttpDeleteTest extends \PHPUnit\Framework\TestCase
 
 		$request = new \Rokde\HttpClient\Request('https://httpbin.org/delete', 'DELETE');
 		$request->asForm()
-			->withBody(http_build_query([
+			->setBody(http_build_query([
 				'input' => 'value'
 			]));
 

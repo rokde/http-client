@@ -10,7 +10,7 @@ class HttpPatchTest extends \PHPUnit\Framework\TestCase
 
 		$request = new \Rokde\HttpClient\Request('https://httpbin.org/patch', 'PATCH');
 		$request->asForm()
-			->withBody(http_build_query([
+			->setBody(http_build_query([
 				'input' => 'value'
 			]));
 

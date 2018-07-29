@@ -74,9 +74,9 @@ class ClientContext
 	public static function createFromRequest(Request $request): self
 	{
 		$context = new static();
-		$context->method = $request->getMethod();
-		$context->headers = $request->getHeaders();
-		$context->protocol_version = $request->getProtocolVersion();
+		$context->method = $request->method();
+		$context->headers = $request->headers();
+		$context->protocol_version = $request->protocolVersion();
 
 		return $context;
 	}
