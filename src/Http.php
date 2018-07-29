@@ -66,6 +66,11 @@ class Http
 		return $this->client->send($this->request->patch($data, $url));
 	}
 
+	public function delete($url = null, array $data = null): Response
+	{
+		return $this->client->send($this->request->delete($url, $data));
+	}
+
 	/**
 	 * route every method call to the request instance
 	 *

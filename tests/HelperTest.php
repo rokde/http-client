@@ -68,4 +68,32 @@ class HelperTest extends \PHPUnit\Framework\TestCase
 			'data' => '',
 		], $response->json());
 	}
+
+	/** @test */
+	public function it_can_delete_data() {
+		$response = http()->delete('https://httpbin.org/delete', ['input' => 'value']);
+
+		$this->assertInstanceOf(\Rokde\HttpClient\Response::class, $response);
+
+		$this->assertArraySubset([
+			'form' => [
+				'input' => 'value',
+			],
+			'files' => [],
+			'data' => '',
+		], $response->json());
+	}
+
+	/** @test */
+	public function it_can_delete_data_without_data() {
+		$response = http()->delete('https://httpbin.org/delete');
+
+		$this->assertInstanceOf(\Rokde\HttpClient\Response::class, $response);
+
+		$this->assertArraySubset([
+			'form' => [],
+			'files' => [],
+			'data' => '',
+		], $response->json());
+	}
 }

@@ -396,6 +396,26 @@ class Request
 		return $this->presetFormBasedRequests('PATCH', $data);
 	}
 
+	/**
+	 * preset all settings for sending a delete
+	 *
+	 * @param null|string|Uri $url
+	 * @param array|null $data
+	 * @return Request
+	 */
+	public function delete($url = null, array $data = null): self
+	{
+		if ($url !== null) {
+			$this->withUri($url);
+		}
+
+		if ($data !== null) {
+			return $this->presetFormBasedRequests('DELETE', $data);
+		}
+
+		return $this->withMethod('DELETE')->withBody(null);
+	}
+
 	private function presetFormBasedRequests(string $method, array $data): self
 	{
 		return $this->withMethod($method)
