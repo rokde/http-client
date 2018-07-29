@@ -1,20 +1,18 @@
 <?php
 
-
 namespace Rokde\HttpClient;
-
 
 class Client
 {
 	/**
 	 * @var ClientContext
 	 */
-	protected $context;
+	private $context;
 
 	/**
 	 * @var string user agent
 	 */
-	protected $user_agent;
+	private $user_agent;
 
 	/**
 	 * @param string|null $userAgent
