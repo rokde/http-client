@@ -26,7 +26,7 @@ I recommend the use of the `http()` function to keep the packages purpose in min
 $response = http('https://httpbin.org/get');
 
 // POST (post data to uri)
-/** @var \Rokde\HttpClien\Response $response */
+/** @var \Rokde\HttpClient\Response $response */
 $response = http()->post(['data' => 'value'], 'https://httpbin.org/post');
 ```
 
