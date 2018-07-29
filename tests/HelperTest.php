@@ -38,4 +38,19 @@ class HelperTest extends \PHPUnit\Framework\TestCase
 			'data' => '',
 		], $response->json());
 	}
+
+	/** @test */
+	public function it_can_put_data() {
+		$response = http()->put(['input' => 'value'], 'https://httpbin.org/put');
+
+		$this->assertInstanceOf(\Rokde\HttpClient\Response::class, $response);
+
+		$this->assertArraySubset([
+			'form' => [
+				'input' => 'value',
+			],
+			'files' => [],
+			'data' => '',
+		], $response->json());
+	}
 }

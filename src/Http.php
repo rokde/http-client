@@ -56,6 +56,11 @@ class Http
 		return $this->client->send($this->request->post($data, $url));
 	}
 
+	public function put(array $data, $url = null): Response
+	{
+		return $this->client->send($this->request->put($data, $url));
+	}
+
 	/**
 	 * route every method call to the request instance
 	 *

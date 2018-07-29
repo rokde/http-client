@@ -172,7 +172,7 @@ class Request
 			$header->addValue($value);
 		}
 
-		$this->headers[ $header->getName() ] = $header;
+		$this->headers[$header->getName()] = $header;
 
 		return $this;
 	}
@@ -361,7 +361,28 @@ class Request
 			$this->withUri($url);
 		}
 
-		return $this->withMethod('POST')
+		return $this->presetFormBasedRequests('POST', $data);
+	}
+
+	/**
+	 * preset all settings for sending a put
+	 *
+	 * @param array $data
+	 * @param null|string|Uri $url
+	 * @return Request
+	 */
+	public function put(array $data, $url = null): self
+	{
+		if ($url !== null) {
+			$this->withUri($url);
+		}
+
+		return $this->presetFormBasedRequests('PUT', $data);
+	}
+
+	private function presetFormBasedRequests(string $method, array $data): self
+	{
+		return $this->withMethod($method)
 			->asForm()
 			->withBody(http_build_query($data));
 	}
