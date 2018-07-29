@@ -334,12 +334,36 @@ class Request
 	}
 
 	/**
+	 * preset all settings for sending a get
+	 *
 	 * @param string|Uri $url
 	 * @return Request
 	 */
-	public function get($url): self
+	public function get($url = null): self
 	{
-		return $this->withMethod('GET')->withUri($url);
+		if ($url !== null) {
+			$this->withUri($url);
+		}
+
+		return $this->withMethod('GET');
+	}
+
+	/**
+	 * preset all settings for sending a post
+	 *
+	 * @param array $data
+	 * @param null|string|Uri $url
+	 * @return Request
+	 */
+	public function post(array $data, $url = null): self
+	{
+		if ($url !== null) {
+			$this->withUri($url);
+		}
+
+		return $this->withMethod('POST')
+			->asForm()
+			->withBody(http_build_query($data));
 	}
 
 	/**

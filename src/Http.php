@@ -21,7 +21,6 @@ namespace Rokde\HttpClient;
  * @method Request asJson()
  * @method Request asForm()
  * @method Request accept()
- * @method Request get($url)
  * @package Rokde\HttpClient
  */
 class Http
@@ -45,6 +44,16 @@ class Http
 	public function send(): Response
 	{
 		return $this->client->send($this->request);
+	}
+
+	public function get($url = null): Response
+	{
+		return $this->client->send($this->request->get($url));
+	}
+
+	public function post(array $data, $url = null): Response
+	{
+		return $this->client->send($this->request->post($data, $url));
 	}
 
 	/**
