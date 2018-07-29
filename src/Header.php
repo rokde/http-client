@@ -29,6 +29,10 @@ class Header
 
 	public static function fromString(string $string): self
 	{
+		if (strpos($string, ':') === false) {
+			throw new \InvalidArgumentException('Given string has not a valid header format');
+		}
+
 		$parts = explode(':', $string, 2);
 
 		return new static(trim($parts[0]), trim($parts[1]));

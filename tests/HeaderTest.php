@@ -20,4 +20,12 @@ class HeaderTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertEquals("date: Sun, 29 Jul 2018 09:58:18 GMT\r\n", (string)$header);
 	}
+
+	/** @test */
+	public function it_can_not_resolve_http_version_header()
+	{
+		$this->expectException(InvalidArgumentException::class);
+
+		\Rokde\HttpClient\Header::fromString('HTTP/1.1 200 OK');
+	}
 }
