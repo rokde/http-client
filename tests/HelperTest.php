@@ -53,4 +53,19 @@ class HelperTest extends \PHPUnit\Framework\TestCase
 			'data' => '',
 		], $response->json());
 	}
+
+	/** @test */
+	public function it_can_patch_data() {
+		$response = http()->patch(['input' => 'value'], 'https://httpbin.org/patch');
+
+		$this->assertInstanceOf(\Rokde\HttpClient\Response::class, $response);
+
+		$this->assertArraySubset([
+			'form' => [
+				'input' => 'value',
+			],
+			'files' => [],
+			'data' => '',
+		], $response->json());
+	}
 }

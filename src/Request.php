@@ -380,6 +380,22 @@ class Request
 		return $this->presetFormBasedRequests('PUT', $data);
 	}
 
+	/**
+	 * preset all settings for sending a patch
+	 *
+	 * @param array $data
+	 * @param null|string|Uri $url
+	 * @return Request
+	 */
+	public function patch(array $data, $url = null): self
+	{
+		if ($url !== null) {
+			$this->withUri($url);
+		}
+
+		return $this->presetFormBasedRequests('PATCH', $data);
+	}
+
 	private function presetFormBasedRequests(string $method, array $data): self
 	{
 		return $this->withMethod($method)

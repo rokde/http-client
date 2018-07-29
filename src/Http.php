@@ -61,6 +61,11 @@ class Http
 		return $this->client->send($this->request->put($data, $url));
 	}
 
+	public function patch(array $data, $url = null): Response
+	{
+		return $this->client->send($this->request->patch($data, $url));
+	}
+
 	/**
 	 * route every method call to the request instance
 	 *
