@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Rokde\HttpClient;
-
 
 class Uri
 {
@@ -26,13 +24,13 @@ class Uri
 		$parsed = parse_url($uri);
 
 		return (new Uri())
-			->withScheme($parsed['scheme'])
-			->withHost($parsed['host'])
-			->withPort($parsed['port'])
-			->withUserInfo($parsed['user'], $parsed['pass'])
-			->withPath($parsed['path'])
-			->withQuery($parsed['query'])
-			->withFragment($parsed['fragment']);
+			->setScheme($parsed['scheme'])
+			->setHost($parsed['host'])
+			->setPort($parsed['port'])
+			->setUser($parsed['user'], $parsed['pass'])
+			->setPath($parsed['path'])
+			->setQuery($parsed['query'])
+			->setFragment($parsed['fragment']);
 	}
 
 	/**
@@ -49,9 +47,14 @@ class Uri
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.1
 	 * @return string The URI scheme.
 	 */
-	public function getScheme(): string
+	public function scheme(): string
 	{
 		return $this->scheme;
+	}
+
+	public function isHttps(): bool
+	{
+		return $this->scheme() === 'https';
 	}
 
 	/**
@@ -72,11 +75,11 @@ class Uri
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.2
 	 * @return string The URI authority, in "[user-info@]host[:port]" format.
 	 */
-	public function getAuthority(): ?string
+	public function authority(): ?string
 	{
 		return $this->user === null
-			? $this->getHostWithPort()
-			: $this->getUserInfo() . '@' . $this->getHostWithPort();
+			? $this->hostWithPort()
+			: $this->userInfo() . '@' . $this->hostWithPort();
 	}
 
 	/**
@@ -94,7 +97,7 @@ class Uri
 	 *
 	 * @return string The URI user information, in "username[:password]" format.
 	 */
-	public function getUserInfo(): string
+	public function userInfo(): string
 	{
 		return $this->user === null
 			? ''
@@ -112,7 +115,7 @@ class Uri
 	 * @see http://tools.ietf.org/html/rfc3986#section-3.2.2
 	 * @return string The URI host.
 	 */
-	public function getHost(): string
+	public function host(): string
 	{
 		return $this->host;
 	}
@@ -122,21 +125,21 @@ class Uri
 	 *
 	 * @return string
 	 */
-	public function getHostWithPort(): string
+	public function hostWithPort(): string
 	{
-		if ($this->getScheme() === 'https') {
-			return $this->getPort() === 443
-				? $this->getHost()
-				: $this->getHost() . ':' . $this->getPort();
+		if ($this->isHttps()) {
+			return $this->port() === 443
+				? $this->host()
+				: $this->host() . ':' . $this->port();
 		}
 
-		if ($this->getScheme() === 'http') {
-			return $this->getPort() === 80
-				? $this->getHost()
-				: $this->getHost() . ':' . $this->getPort();
+		if ($this->scheme() === 'http') {
+			return $this->port() === 80
+				? $this->host()
+				: $this->host() . ':' . $this->port();
 		}
 
-		return $this->getHost() . ':' . $this->getPort();
+		return $this->host() . ':' . $this->port();
 	}
 
 	/**
@@ -154,10 +157,10 @@ class Uri
 	 *
 	 * @return null|int The URI port.
 	 */
-	public function getPort(): int
+	public function port(): int
 	{
 		return $this->port === null
-			? $this->getScheme() === 'https'
+			? $this->scheme() === 'https'
 				? 443
 				: 80
 			: $this->port;
@@ -188,7 +191,7 @@ class Uri
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.3
 	 * @return string The URI path.
 	 */
-	public function getPath(): string
+	public function path(): string
 	{
 		return empty($this->path)
 			? '/'
@@ -215,7 +218,7 @@ class Uri
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.4
 	 * @return string The URI query string.
 	 */
-	public function getQuery(): string
+	public function query(): string
 	{
 		return '' . $this->query;
 	}
@@ -236,7 +239,7 @@ class Uri
 	 * @see https://tools.ietf.org/html/rfc3986#section-3.5
 	 * @return string The URI fragment.
 	 */
-	public function getFragment(): string
+	public function fragment(): string
 	{
 		return '' . $this->fragment;
 	}
@@ -256,7 +259,7 @@ class Uri
 	 * @return static A new instance with the specified scheme.
 	 * @throws \InvalidArgumentException for invalid or unsupported schemes.
 	 */
-	public function withScheme(string $scheme): self
+	public function setScheme(string $scheme): self
 	{
 		$this->scheme = strtolower($scheme);
 
@@ -277,7 +280,7 @@ class Uri
 	 * @param null|string $password The password associated with $user.
 	 * @return static A new instance with the specified user information.
 	 */
-	public function withUserInfo($user, $password = null): self
+	public function setUser($user, $password = null): self
 	{
 		$this->user = $user;
 		$this->password = $password;
@@ -297,7 +300,7 @@ class Uri
 	 * @return static A new instance with the specified host.
 	 * @throws \InvalidArgumentException for invalid hostnames.
 	 */
-	public function withHost(string $host): self
+	public function setHost(string $host): self
 	{
 		$this->host = $host;
 
@@ -321,7 +324,7 @@ class Uri
 	 * @return static A new instance with the specified port.
 	 * @throws \InvalidArgumentException for invalid ports.
 	 */
-	public function withPort($port): self
+	public function setPort($port): self
 	{
 		$this->port = $port === null ? null : $port + 0;
 
@@ -350,7 +353,7 @@ class Uri
 	 * @return static A new instance with the specified path.
 	 * @throws \InvalidArgumentException for invalid paths.
 	 */
-	public function withPath(?string $path): self
+	public function setPath(?string $path): self
 	{
 		$this->path = '/' . ltrim($path, '/');
 
@@ -372,7 +375,7 @@ class Uri
 	 * @return static A new instance with the specified query string.
 	 * @throws \InvalidArgumentException for invalid query strings.
 	 */
-	public function withQuery(?string $query): self
+	public function setQuery(?string $query): self
 	{
 		$this->query = $query;
 
@@ -393,7 +396,7 @@ class Uri
 	 * @param string $fragment The fragment to use with the new instance.
 	 * @return static A new instance with the specified fragment.
 	 */
-	public function withFragment(?string $fragment): self
+	public function setFragment(?string $fragment): self
 	{
 		$this->fragment = $fragment;
 
@@ -425,12 +428,12 @@ class Uri
 	 */
 	public function __toString(): string
 	{
-		$query = $this->getQuery();
-		$fragment = $this->getFragment();
+		$query = $this->query();
+		$fragment = $this->fragment();
 
-		return $this->getScheme() . '://'
-			. $this->getAuthority()
-			. $this->getPath()
+		return $this->scheme() . '://'
+			. $this->authority()
+			. $this->path()
 			. (empty($query) ? '' : '?' . $query)
 			. (empty($fragment) ? '' : '#' . $fragment);
 	}

@@ -10,13 +10,13 @@ class UriTest extends \PHPUnit\Framework\TestCase
 
 		$uri = \Rokde\HttpClient\Uri::fromString($url);
 
-		$this->assertEquals('https', $uri->getScheme());
-		$this->assertEquals('max:mustermann', $uri->getUserInfo());
-		$this->assertEquals('www.testdomain.com', $uri->getHost());
-		$this->assertEquals(8081, $uri->getPort());
-		$this->assertEquals('/path/to/my/site', $uri->getPath());
-		$this->assertEquals('debug=1', $uri->getQuery());
-		$this->assertEquals('comments-21', $uri->getFragment());
+		$this->assertEquals('https', $uri->scheme());
+		$this->assertEquals('max:mustermann', $uri->userInfo());
+		$this->assertEquals('www.testdomain.com', $uri->host());
+		$this->assertEquals(8081, $uri->port());
+		$this->assertEquals('/path/to/my/site', $uri->path());
+		$this->assertEquals('debug=1', $uri->query());
+		$this->assertEquals('comments-21', $uri->fragment());
 		$this->assertEquals($url, $uri->__toString());
 	}
 
@@ -27,11 +27,11 @@ class UriTest extends \PHPUnit\Framework\TestCase
 
 		$uri = \Rokde\HttpClient\Uri::fromString($url);
 
-		$this->assertEquals('https', $uri->getScheme());
-		$this->assertEquals('', $uri->getUserInfo());
-		$this->assertEquals('www.testdomain.com', $uri->getHost());
-		$this->assertEquals(443, $uri->getPort());
-		$this->assertEquals('/', $uri->getPath());
+		$this->assertEquals('https', $uri->scheme());
+		$this->assertEquals('', $uri->userInfo());
+		$this->assertEquals('www.testdomain.com', $uri->host());
+		$this->assertEquals(443, $uri->port());
+		$this->assertEquals('/', $uri->path());
 		$this->assertEquals($url . '/', $uri->__toString());
 	}
 }

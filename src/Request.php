@@ -307,7 +307,7 @@ class Request
 			$currentUri = $this->uri;
 			$uri = $uri instanceof Uri ? $uri : Uri::fromString($uri);
 
-			$uri->withHost($currentUri->getHost());
+			$uri->setHost($currentUri->host());
 			$this->uri = $uri;
 		} else {
 			$this->uri = $uri instanceof Uri ? $uri : Uri::fromString($uri);
