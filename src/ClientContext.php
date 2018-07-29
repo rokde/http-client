@@ -11,10 +11,19 @@ class ClientContext
 	 */
 	protected $method = 'GET';
 
+	/**
+	 * @var array|Header[] headers collection
+	 */
 	protected $headers = [];
 
+	/**
+	 * @var string initial user agent
+	 */
 	protected $user_agent = 'rokde-httpclient/1.0';
 
+	/**
+	 * @var string|null initial content
+	 */
 	protected $content;
 
 	/**
@@ -22,22 +31,48 @@ class ClientContext
 	 */
 	protected $proxy;
 
+	/**
+	 * @var bool requesting a full uri or not
+	 */
 	protected $request_fulluri = false;
 
+	/**
+	 * @var int follow this number of location responses
+	 */
 	protected $follow_location = 0;
 
+	/**
+	 * @var int follow this number of redirects in the responses
+	 */
 	protected $max_redirects = 0;
 
+	/**
+	 * @var string protocol version
+	 */
 	protected $protocol_version = '1.1';
 
+	/**
+	 * @var float timeout in seconds
+	 */
 	protected $timeout = 1.0;
 
+	/**
+	 * @var bool ignore errors on sending and retrieving
+	 */
 	protected $ignore_errors = true;
 
+	/**
+	 * do not instantiate yourself
+	 */
 	private function __construct()
 	{
 	}
 
+	/**
+	 * factory creation
+	 * @param Request $request
+	 * @return ClientContext
+	 */
 	public static function createFromRequest(Request $request): self
 	{
 		$context = new static();
