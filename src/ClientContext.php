@@ -1,65 +1,63 @@
 <?php
 
-
 namespace Rokde\HttpClient;
-
 
 class ClientContext
 {
 	/**
 	 * @var string method
 	 */
-	protected $method = 'GET';
+	private $method = 'GET';
 
 	/**
 	 * @var array|Header[] headers collection
 	 */
-	protected $headers = [];
+	private $headers = [];
 
 	/**
 	 * @var string initial user agent
 	 */
-	protected $user_agent = 'rokde-httpclient/1.0';
+	private $user_agent = 'rokde-httpclient/1.0';
 
 	/**
 	 * @var string|null initial content
 	 */
-	protected $content;
+	private $content;
 
 	/**
 	 * @var string|null proxy usage
 	 */
-	protected $proxy;
+	private $proxy;
 
 	/**
 	 * @var bool requesting a full uri or not
 	 */
-	protected $request_fulluri = false;
+	private $request_fulluri = false;
 
 	/**
 	 * @var int follow this number of location responses
 	 */
-	protected $follow_location = 0;
+	private $follow_location = 0;
 
 	/**
 	 * @var int follow this number of redirects in the responses
 	 */
-	protected $max_redirects = 0;
+	private $max_redirects = 0;
 
 	/**
 	 * @var string protocol version
 	 */
-	protected $protocol_version = '1.1';
+	private $protocol_version = '1.1';
 
 	/**
 	 * @var float timeout in seconds
 	 */
-	protected $timeout = 1.0;
+	private $timeout = 1.0;
 
 	/**
 	 * @var bool ignore errors on sending and retrieving
 	 */
-	protected $ignore_errors = true;
+	private $ignore_errors = true;
 
 	/**
 	 * do not instantiate yourself
