@@ -11,7 +11,10 @@
     "autoload": {
         "psr-4": {
             "Rokde\\HttpClient\\": "src/"
-        }
+        },
+        "files": [
+            "src/helpers.php"
+        ]
     },
     "license": "MIT",
     "authors": [
