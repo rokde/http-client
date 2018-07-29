@@ -28,12 +28,12 @@ class Http
 	/**
 	 * @var Request
 	 */
-	protected $request;
+	private $request;
 
 	/**
 	 * @var Client
 	 */
-	protected $client;
+	private $client;
 
 	public function __construct(string $url = null, string $method = 'GET', array $headers = [])
 	{
