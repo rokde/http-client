@@ -16,12 +16,16 @@ class Client
 	 */
 	protected $user_agent;
 
+	/**
+	 * @param string|null $userAgent
+	 */
 	public function __construct(string $userAgent = null)
 	{
 		$this->user_agent = $userAgent ?: 'rokde-httpclient/1.0';
 	}
 
 	/**
+	 * sending a request
 	 * @param Request $request
 	 * @return Response
 	 */
