@@ -15,10 +15,6 @@ class Uri
     protected $query;
     protected $fragment;
 
-    public function __construct()
-    {
-    }
-
     public static function fromString(string $uri): self
     {
         $parsed = parse_url($uri);
