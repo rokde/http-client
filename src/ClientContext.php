@@ -78,6 +78,7 @@ class ClientContext
         $context->method = $request->method();
         $context->headers = $request->headers();
         $context->protocol_version = $request->protocolVersion();
+        $context->timeout = $request->timeout();
 
         return $context;
     }

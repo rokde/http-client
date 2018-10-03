@@ -29,6 +29,11 @@ class Request
      */
     protected $uri;
 
+    /**
+     * @var float timeout in seconds
+     */
+    protected $timeout = 1.0;
+
     public function __construct(string $url = null, string $method = 'GET', array $headers = [])
     {
         if ($url !== null) {
@@ -430,5 +435,24 @@ class Request
         }
 
         return $this->setMethod('DELETE')->setBody(null);
+    }
+
+    /**
+     * @return float
+     */
+    public function timeout(): float
+    {
+        return $this->timeout;
+    }
+
+    /**
+     * @param float $timeout
+     * @return Request
+     */
+    public function setTimeout(float $timeout): self
+    {
+        $this->timeout = $timeout;
+
+        return $this;
     }
 }
