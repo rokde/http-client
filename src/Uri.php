@@ -144,7 +144,7 @@ class Uri
      * @return static A new instance with the specified port.
      * @throws \InvalidArgumentException for invalid ports.
      */
-    public function setPort($port): self
+    public function setPort(?int $port): self
     {
         $this->port = $port === null ? null : $port + 0;
 
