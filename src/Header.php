@@ -4,84 +4,84 @@ namespace Rokde\HttpClient;
 
 class Header
 {
-	/**
-	 * @var string
-	 */
-	protected $name;
+    /**
+     * @var string
+     */
+    protected $name;
 
-	/**
-	 * @var string[]
-	 */
-	protected $value = [];
+    /**
+     * @var string[]
+     */
+    protected $value = [];
 
-	/**
-	 * @param string $name
-	 * @param null $value
-	 */
-	public function __construct(string $name, $value = null)
-	{
-		$this->name = strtolower($name);
+    /**
+     * @param string $name
+     * @param null $value
+     */
+    public function __construct(string $name, $value = null)
+    {
+        $this->name = strtolower($name);
 
-		if ($value !== null) {
-			foreach ((array)$value as $v) {
-				$this->addValue($v);
-			}
-		}
-	}
+        if ($value !== null) {
+            foreach ((array)$value as $v) {
+                $this->addValue($v);
+            }
+        }
+    }
 
-	/**
-	 * factory creation
-	 *
-	 * @param string $string
-	 * @return Header
-	 */
-	public static function fromString(string $string): self
-	{
-		if (strpos($string, ':') === false) {
-			throw new \InvalidArgumentException('Given string has not a valid header format');
-		}
+    public function addValue(string $value): self
+    {
+        $this->value[] = $value;
 
-		$parts = explode(':', $string, 2);
+        return $this;
+    }
 
-		return new static(trim($parts[0]), trim($parts[1]));
-	}
+    /**
+     * factory creation
+     *
+     * @param  string $string
+     * @return Header
+     */
+    public static function fromString(string $string): self
+    {
+        if (strpos($string, ':') === false) {
+            throw new \InvalidArgumentException('Given string has not a valid header format');
+        }
 
-	public function name(): string
-	{
-		return $this->name;
-	}
+        $parts = explode(':', $string, 2);
 
-	public function value(): array
-	{
-		return $this->value;
-	}
+        return new static(trim($parts[0]), trim($parts[1]));
+    }
 
-	public function setValue(string $value): self
-	{
-		$this->value = [];
+    public function value(): array
+    {
+        return $this->value;
+    }
 
-		return $this->addValue($value);
-	}
+    public function setValue(string $value): self
+    {
+        $this->value = [];
 
-	public function addValue(string $value): self
-	{
-		$this->value[] = $value;
+        return $this->addValue($value);
+    }
 
-		return $this;
-	}
+    public function __toString()
+    {
+        return $this->valueLine();
+    }
 
-	public function valueLine(): string
-	{
-		$line = '';
-		foreach ($this->value as $value) {
-			$line .= $this->name() . ': ' . $value . "\r\n";
-		}
+    public function valueLine(): string
+    {
+        $line = '';
+        foreach ($this->value as $value) {
+            $line .= $this->name() . ': ' . $value . "\r\n";
+        }
 
-		return $line;
-	}
+        return $line;
+    }
 
-	public function __toString()
-	{
-		return $this->valueLine();
-	}
+    public function name(): string
+    {
+        return $this->name;
+    }
 }
