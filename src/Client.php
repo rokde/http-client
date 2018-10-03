@@ -24,7 +24,8 @@ class Client
 
     /**
      * sending a request
-     * @param Request $request
+     *
+     * @param  Request $request
      * @return Response
      */
     public function send(Request $request): Response
