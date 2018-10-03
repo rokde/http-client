@@ -66,11 +66,12 @@ class Response
 
     public function json()
     {
-        if (!extension_loaded('json')) {
-            throw new \RuntimeException('The necessary json extension is not loaded');
-        }
-
         return json_decode($this->content(), true);
+    }
+
+    public function content(): ?string
+    {
+        return $this->content;
     }
 
     public function __toString(): string
