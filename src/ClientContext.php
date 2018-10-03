@@ -68,7 +68,8 @@ class ClientContext
 
     /**
      * factory creation
-     * @param Request $request
+     *
+     * @param  Request $request
      * @return ClientContext
      */
     public static function createFromRequest(Request $request): self
@@ -82,7 +83,7 @@ class ClientContext
     }
 
     /**
-     * @param string $method
+     * @param  string $method
      * @return ClientContext
      */
     public function setMethod(string $method): self
@@ -93,7 +94,7 @@ class ClientContext
     }
 
     /**
-     * @param array|Header[] $headers
+     * @param  array|Header[] $headers
      * @return ClientContext
      */
     public function setHeaders(array $headers): self
@@ -104,7 +105,7 @@ class ClientContext
     }
 
     /**
-     * @param string $user_agent
+     * @param  string $user_agent
      * @return ClientContext
      */
     public function setUserAgent(string $user_agent): self
@@ -115,7 +116,7 @@ class ClientContext
     }
 
     /**
-     * @param null|string $content
+     * @param  null|string $content
      * @return ClientContext
      */
     public function setContent(?string $content): self
@@ -126,7 +127,7 @@ class ClientContext
     }
 
     /**
-     * @param null|string $proxy
+     * @param  null|string $proxy
      * @return ClientContext
      */
     public function setProxy(?string $proxy): self
@@ -137,7 +138,7 @@ class ClientContext
     }
 
     /**
-     * @param bool $request_fulluri
+     * @param  bool $request_fulluri
      * @return ClientContext
      */
     public function requestFullUri(bool $request_fulluri = true): self
@@ -153,7 +154,7 @@ class ClientContext
     }
 
     /**
-     * @param int $follow_location
+     * @param  int $follow_location
      * @return ClientContext
      */
     public function followLocations(int $follow_location): self
@@ -164,7 +165,7 @@ class ClientContext
     }
 
     /**
-     * @param int $max_redirects
+     * @param  int $max_redirects
      * @return ClientContext
      */
     public function maxRedirects(int $max_redirects): self
@@ -175,7 +176,7 @@ class ClientContext
     }
 
     /**
-     * @param string $protocol_version
+     * @param  string $protocol_version
      * @return ClientContext
      */
     public function setProtocolVersion(string $protocol_version): self
@@ -186,7 +187,7 @@ class ClientContext
     }
 
     /**
-     * @param float $timeout
+     * @param  float $timeout
      * @return ClientContext
      */
     public function setTimeout(float $timeout): self
@@ -197,7 +198,7 @@ class ClientContext
     }
 
     /**
-     * @param bool $ignore_errors
+     * @param  bool $ignore_errors
      * @return ClientContext
      */
     public function ignoreErrors(bool $ignore_errors = true): self
