@@ -4,6 +4,9 @@ namespace Rokde\HttpClient;
 
 class Uri
 {
+    const DEFAULT_HTTP_PORT = 80;
+    const DEFAULT_HTTPS_PORT = 443;
+
     protected $scheme = 'https';
     protected $host;
     protected $port;
@@ -302,13 +305,13 @@ class Uri
     public function hostWithPort(): string
     {
         if ($this->isHttps()) {
-            return $this->port() === 443
+            return $this->port() === self::DEFAULT_HTTPS_PORT
                 ? $this->host()
                 : $this->host() . ':' . $this->port();
         }
 
         if ($this->scheme() === 'http') {
-            return $this->port() === 80
+            return $this->port() === self::DEFAULT_HTTP_PORT
                 ? $this->host()
                 : $this->host() . ':' . $this->port();
         }
@@ -359,8 +362,8 @@ class Uri
     {
         return $this->port === null
             ? $this->scheme() === 'https'
-                ? 443
-                : 80
+                ? self::DEFAULT_HTTPS_PORT
+                : self::DEFAULT_HTTP_PORT
             : $this->port;
     }
 
