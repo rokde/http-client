@@ -58,6 +58,11 @@ class Header
         return $this->value;
     }
 
+    public function firstValue()
+    {
+        return current($this->value);
+    }
+
     public function setValue(string $value): self
     {
         $this->value = [];
