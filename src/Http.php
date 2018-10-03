@@ -21,6 +21,8 @@ namespace Rokde\HttpClient;
  * @method  Request asJson()
  * @method  Request asForm()
  * @method  Request accept()
+ * @method  float timeout()
+ * @method  Request setTimeout(float $timeout)
  * @package Rokde\HttpClient
  */
 class Http
