@@ -19,7 +19,7 @@ class Client
      */
     public function __construct(string $userAgent = null)
     {
-        $this->user_agent = $userAgent ?: 'rokde-httpclient/1.0';
+        $this->user_agent = $userAgent ?: 'rokde-httpclient/1.1';
     }
 
     /**

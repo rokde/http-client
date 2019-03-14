@@ -17,7 +17,7 @@ class ClientContext
     /**
      * @var string initial user agent
      */
-    private $user_agent = 'rokde-httpclient/1.0';
+    private $user_agent = 'rokde-httpclient/1.1';
 
     /**
      * @var string|null initial content
