@@ -49,6 +49,12 @@ if ($response->isOk()) {
 
 Further usage examples can be found at the `/tests` folder of this package.
 
+### Testing
+
+Run the tests with:
+
+    composer test
+
 ## TODO
 
 [ ] Sending requests with authorization
