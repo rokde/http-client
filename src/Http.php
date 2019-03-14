@@ -27,15 +27,11 @@ namespace Rokde\HttpClient;
  */
 class Http
 {
-    /**
-     * @var Request
-     */
-    private $request;
+    /** @var Request */
+    protected $request;
 
-    /**
-     * @var Client
-     */
-    private $client;
+    /** @var Client */
+    protected $client;
 
     public function __construct(string $url = null, string $method = 'GET', array $headers = [])
     {
