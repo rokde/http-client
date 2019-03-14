@@ -15,13 +15,11 @@ class HttpDeleteTest extends \PHPUnit\Framework\TestCase
 
         $response = $client->send($request);
 
-        $this->assertArraySubset([
-            'form' => [
-                'input' => 'value',
-            ],
-            'files' => [],
-            'data' => '',
-        ], $response->json());
+        $this->assertEquals([
+            'input' => 'value',
+        ], $response->json()['form']);
+        $this->assertEquals([], $response->json()['files']);
+        $this->assertEquals('', $response->json()['data']);
 
         $this->assertTrue($response->isOk());
         $this->assertFalse($response->isRedirect());
