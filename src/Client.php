@@ -4,9 +4,7 @@ namespace Rokde\HttpClient;
 
 class Client
 {
-    /**
-     * @var ClientContext
-     */
+    /** @var ClientContext */
     private $context;
 
     /**
@@ -26,12 +24,6 @@ class Client
         return $this->context;
     }
 
-    /**
-     * sending a request
-     *
-     * @param  Request $request
-     * @return Response
-     */
     public function send(Request $request): Response
     {
         $this->context->updateFromRequest($request);
