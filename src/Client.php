@@ -16,7 +16,9 @@ class Client
     public function __construct(string $userAgent = null, ClientContext $context = null)
     {
         $this->context = $context ?: new ClientContext();
-        $this->context->setUserAgent($userAgent ?: 'rokde-httpclient/1.1');
+        if ($userAgent !== null) {
+            $this->context->setUserAgent($userAgent);
+        }
     }
 
     public function context(): ClientContext
