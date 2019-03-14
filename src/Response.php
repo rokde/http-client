@@ -4,45 +4,26 @@ namespace Rokde\HttpClient;
 
 class Response
 {
-    /**
-     * @var string response body
-     */
+    /** @var string response body */
     private $content;
 
-    /**
-     * @var array|Header[] header collection
-     */
+    /** @var array|Header[] header collection */
     private $headers = [];
 
-    /**
-     * @var int initial response status code
-     */
+    /** @var int initial response status code */
     private $status = 0;
 
-    /**
-     * @var null|string inital response status message
-     */
+    /** @var null|string inital response status message */
     private $status_message = null;
 
-    /**
-     * @var string initial protocal version
-     */
+    /** @var string initial protocal version */
     private $protocolVersion;
 
-    /**
-     * do not instantiate it directly
-     */
+    /** do not instantiate it directly */
     private function __construct()
     {
     }
 
-    /**
-     * factory creation of a response
-     *
-     * @param  array $responseHeaderLines
-     * @param  string $content
-     * @return Response
-     */
     public static function create(array $responseHeaderLines, string $content): self
     {
         $response = new static();
