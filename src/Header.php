@@ -4,21 +4,13 @@ namespace Rokde\HttpClient;
 
 class Header
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $name;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $value = [];
 
-    /**
-     * @param string $name
-     * @param null $value
-     */
-    public function __construct(string $name, $value = null)
+    public function __construct(string $name, ?string $value = null)
     {
         $this->name = strtolower($name);
 
@@ -36,12 +28,6 @@ class Header
         return $this;
     }
 
-    /**
-     * factory creation
-     *
-     * @param  string $string
-     * @return Header
-     */
     public static function fromString(string $string): self
     {
         if (strpos($string, ':') === false) {
