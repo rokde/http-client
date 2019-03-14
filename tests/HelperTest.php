@@ -30,13 +30,11 @@ class HelperTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(\Rokde\HttpClient\Response::class, $response);
 
-        $this->assertArraySubset([
-            'form' => [
-                'input' => 'value',
-            ],
-            'files' => [],
-            'data' => '',
-        ], $response->json());
+        $this->assertEquals([
+            'input' => 'value',
+        ], $response->json()['form']);
+        $this->assertEquals([], $response->json()['files']);
+        $this->assertEquals('', $response->json()['data']);
     }
 
     /** @test */
@@ -46,13 +44,11 @@ class HelperTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(\Rokde\HttpClient\Response::class, $response);
 
-        $this->assertArraySubset([
-            'form' => [
-                'input' => 'value',
-            ],
-            'files' => [],
-            'data' => '',
-        ], $response->json());
+        $this->assertEquals([
+            'input' => 'value',
+        ], $response->json()['form']);
+        $this->assertEquals([], $response->json()['files']);
+        $this->assertEquals('', $response->json()['data']);
     }
 
     /** @test */
@@ -62,13 +58,11 @@ class HelperTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(\Rokde\HttpClient\Response::class, $response);
 
-        $this->assertArraySubset([
-            'form' => [
-                'input' => 'value',
-            ],
-            'files' => [],
-            'data' => '',
-        ], $response->json());
+        $this->assertEquals([
+            'input' => 'value',
+        ], $response->json()['form']);
+        $this->assertEquals([], $response->json()['files']);
+        $this->assertEquals('', $response->json()['data']);
     }
 
     /** @test */
@@ -78,13 +72,11 @@ class HelperTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(\Rokde\HttpClient\Response::class, $response);
 
-        $this->assertArraySubset([
-            'form' => [
-                'input' => 'value',
-            ],
-            'files' => [],
-            'data' => '',
-        ], $response->json());
+        $this->assertEquals([
+            'input' => 'value',
+        ], $response->json()['form']);
+        $this->assertEquals([], $response->json()['files']);
+        $this->assertEquals('', $response->json()['data']);
     }
 
     /** @test */
@@ -94,10 +86,8 @@ class HelperTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(\Rokde\HttpClient\Response::class, $response);
 
-        $this->assertArraySubset([
-            'form' => [],
-            'files' => [],
-            'data' => '',
-        ], $response->json());
+        $this->assertEquals([], $response->json()['form']);
+        $this->assertEquals([], $response->json()['files']);
+        $this->assertEquals('', $response->json()['data']);
     }
 }
