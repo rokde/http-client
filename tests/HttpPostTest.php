@@ -15,13 +15,11 @@ class HttpPostTest extends \PHPUnit\Framework\TestCase
 
         $response = $client->send($request);
 
-        $this->assertArraySubset([
-            'form' => [
-                'input1' => 'value1',
-            ],
-            'files' => [],
-            'data' => '',
-        ], $response->json());
+        $this->assertEquals([
+            'input1' => 'value1',
+        ], $response->json()['form']);
+        $this->assertEquals([], $response->json()['files']);
+        $this->assertEquals('', $response->json()['data']);
 
         $this->assertTrue($response->isOk());
         $this->assertFalse($response->isRedirect());
