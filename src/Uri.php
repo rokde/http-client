@@ -126,6 +126,16 @@ class Uri
         return $this;
     }
 
+    public function user(): ?string
+    {
+        return $this->user;
+    }
+
+    public function password(): ?string
+    {
+        return $this->password;
+    }
+
     /**
      * Return an instance with the specified port.
      *

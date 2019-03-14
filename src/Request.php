@@ -83,6 +83,10 @@ class Request
             $this->uri = $uri instanceof Uri ? $uri : Uri::fromString($uri);
         }
 
+        if ($uri instanceof Uri && $uri->user() !== null) {
+            $this->setBasicAuth($uri->user(), $uri->password());
+        }
+
         return $this;
     }
 
