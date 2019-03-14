@@ -14,15 +14,13 @@ class HttpGetTest extends \PHPUnit\Framework\TestCase
 
         $response = $client->send($request);
 
-        $this->assertArraySubset([
-            'headers' => [
-                'Accept' => 'application/json',
-                'Connection' => 'close',
-                'Host' => 'httpbin.org',
-                'X-Verify-Test' => 'true',
-            ],
-            'url' => 'https://httpbin.org/get',
-        ], $response->json());
+        $this->assertEquals([
+            'Accept' => 'application/json',
+            'Host' => 'httpbin.org',
+            'X-Verify-Test' => 'true',
+            'User-Agent' => 'rokde-httpclient/1.1',
+        ], $response->json()['headers']);
+        $this->assertEquals('https://httpbin.org/get', $response->json()['url']);
 
         $this->assertTrue($response->isOk());
         $this->assertFalse($response->isRedirect());
