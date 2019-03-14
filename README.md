@@ -55,10 +55,3 @@ Run the tests with:
 
     composer test
 
-## TODO
-
-[ ] Sending requests with authorization
-
-[ ] Sending requests with json request format
-
-[ ] Return more information from response instance (e.g. json based on content type)

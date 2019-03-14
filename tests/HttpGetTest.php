@@ -27,4 +27,40 @@ class HttpGetTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($response->isClientError());
         $this->assertFalse($response->isServerError());
     }
+
+    /** @test */
+    public function it_can_fetch_an_url_with_basic_auth_header_via_get_method()
+    {
+        $client = new \Rokde\HttpClient\Client();
+        $request = new \Rokde\HttpClient\Request('https://httpbin.org/basic-auth/max/mustermann', 'GET', [
+            'accept' => 'application/json',
+            'x-verify-test' => 'true',
+        ]);
+        $request->setBasicAuth('max', 'mustermann');
+
+        $response = $client->send($request);
+
+        $this->assertEquals([
+            'authenticated' => true,
+            'user' => 'max',
+        ], $response->json());
+    }
+
+    /** @test */
+    public function it_can_fetch_an_url_with_bearer_token_via_get_method()
+    {
+        $client = new \Rokde\HttpClient\Client();
+        $request = new \Rokde\HttpClient\Request('https://httpbin.org/bearer', 'GET', [
+            'accept' => 'application/json',
+            'x-verify-test' => 'true',
+        ]);
+        $request->setBearerToken('bearerToken');
+
+        $response = $client->send($request);
+
+        $this->assertEquals([
+            'authenticated' => true,
+            'token' => 'bearerToken',
+        ], $response->json());
+    }
 }

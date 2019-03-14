@@ -10,16 +10,18 @@ class Client
     private $context;
 
     /**
-     * @var string user agent
-     */
-    private $user_agent;
-
-    /**
      * @param string|null $userAgent
+     * @param \Rokde\HttpClient\ClientContext|null $context
      */
-    public function __construct(string $userAgent = null)
+    public function __construct(string $userAgent = null, ClientContext $context = null)
     {
-        $this->user_agent = $userAgent ?: 'rokde-httpclient/1.1';
+        $this->context = $context ?: new ClientContext();
+        $this->context->setUserAgent($userAgent ?: 'rokde-httpclient/1.1');
+    }
+
+    public function context(): ClientContext
+    {
+        return $this->context;
     }
 
     /**
@@ -30,8 +32,7 @@ class Client
      */
     public function send(Request $request): Response
     {
-        $this->context = ClientContext::createFromRequest($request)
-            ->setUserAgent($this->user_agent);
+        $this->context->updateFromRequest($request);
 
         $content = $request->body();
         if ($content !== null || in_array($request->method(), ['POST', 'PUT', 'PATCH', 'DELETE'])) {

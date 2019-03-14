@@ -4,35 +4,29 @@ namespace Rokde\HttpClient;
 
 class Request
 {
-    /**
-     * @var string protocol version
-     */
+    /** @var string protocol version */
     protected $protocolVersion = '1.1';
 
-    /**
-     * @var array|Header[] headers
-     */
+    /** @var array|Header[] headers */
     protected $headers = [];
 
-    /**
-     * @var string http method
-     */
+    /** @var string http method */
     protected $method;
 
-    /**
-     * @var string|null content
-     */
+    /** @var string|null content */
     protected $content;
 
-    /**
-     * @var Uri|null content
-     */
+    /** @var Uri|null content */
     protected $uri;
 
-    /**
-     * @var float timeout in seconds
-     */
+    /** @var float timeout in seconds */
     protected $timeout = 1.0;
+
+    /** @var null|string basic auth */
+    protected $basicAuth = null;
+
+    /** @var null|string bearer token */
+    protected $bearerToken = null;
 
     public function __construct(string $url = null, string $method = 'GET', array $headers = [])
     {
@@ -452,6 +446,33 @@ class Request
     public function setTimeout(float $timeout): self
     {
         $this->timeout = $timeout;
+
+        return $this;
+    }
+
+    public function bearerToken(): ?string
+    {
+        return $this->bearerToken;
+    }
+
+    public function setBearerToken(string $bearerToken = null): self
+    {
+        $this->bearerToken = $bearerToken;
+
+        return $this;
+    }
+
+    public function basicAuth(): ?string
+    {
+        return $this->basicAuth;
+    }
+
+    public function setBasicAuth(string $username = null, string $password = null): self
+    {
+        $this->basicAuth = null;
+        if ($username !== null) {
+            $this->basicAuth = $username . ':' . $password;
+        }
 
         return $this;
     }

@@ -62,7 +62,7 @@ class ClientContext
     /**
      * do not instantiate yourself
      */
-    private function __construct()
+    public function __construct()
     {
     }
 
@@ -81,6 +81,25 @@ class ClientContext
         $context->timeout = $request->timeout();
 
         return $context;
+    }
+
+    public function updateFromRequest(Request $request): self
+    {
+        if ($request->basicAuth() !== null) {
+            $request->withoutHeader('Authorization')
+                ->setHeader('Authorization', 'Basic ' . base64_encode($request->basicAuth()));
+        }
+        if ($request->bearerToken() !== null) {
+            $request->withoutHeader('Authorization')
+                ->setHeader('Authorization', 'Bearer ' . $request->bearerToken());
+        }
+
+        $this->setMethod($request->method())
+            ->setHeaders($request->headers())
+            ->setProtocolVersion($request->protocolVersion())
+            ->setTimeout($request->timeout());
+
+        return $this;
     }
 
     /**
