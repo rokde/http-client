@@ -4,83 +4,43 @@ namespace Rokde\HttpClient;
 
 class ClientContext
 {
-    /**
-     * @var string method
-     */
+    /** @var string method */
     private $method = 'GET';
 
-    /**
-     * @var array|Header[] headers collection
-     */
+    /** @var array|Header[] headers collection */
     private $headers = [];
 
-    /**
-     * @var string initial user agent
-     */
+    /** @var string initial user agent */
     private $user_agent = 'rokde-httpclient/1.1';
 
-    /**
-     * @var string|null initial content
-     */
+    /** @var string|null initial content */
     private $content;
 
-    /**
-     * @var string|null proxy usage
-     */
+    /** @var string|null proxy usage */
     private $proxy;
 
-    /**
-     * @var bool requesting a full uri or not
-     */
+    /** @var bool requesting a full uri or not */
     private $request_fulluri = false;
 
-    /**
-     * @var int follow this number of location responses
-     */
+    /** @var int follow this number of location responses */
     private $follow_location = 0;
 
-    /**
-     * @var int follow this number of redirects in the responses
-     */
+    /** @var int follow this number of redirects in the responses */
     private $max_redirects = 0;
 
-    /**
-     * @var string protocol version
-     */
+    /** @var string protocol version */
     private $protocol_version = '1.1';
 
-    /**
-     * @var float timeout in seconds
-     */
+    /** @var float timeout in seconds */
     private $timeout = 1.0;
 
-    /**
-     * @var bool ignore errors on sending and retrieving
-     */
+    /** @var bool ignore errors on sending and retrieving */
     private $ignore_errors = true;
 
-    /**
-     * do not instantiate yourself
-     */
-    public function __construct()
-    {
-    }
-
-    /**
-     * factory creation
-     *
-     * @param  Request $request
-     * @return ClientContext
-     */
     public static function createFromRequest(Request $request): self
     {
-        $context = new static();
-        $context->method = $request->method();
-        $context->headers = $request->headers();
-        $context->protocol_version = $request->protocolVersion();
-        $context->timeout = $request->timeout();
-
-        return $context;
+        return (new static())
+            ->updateFromRequest($request);
     }
 
     public function updateFromRequest(Request $request): self
@@ -102,10 +62,6 @@ class ClientContext
         return $this;
     }
 
-    /**
-     * @param  string $method
-     * @return ClientContext
-     */
     public function setMethod(string $method): self
     {
         $this->method = strtoupper($method);
@@ -124,10 +80,6 @@ class ClientContext
         return $this;
     }
 
-    /**
-     * @param  string $user_agent
-     * @return ClientContext
-     */
     public function setUserAgent(string $user_agent): self
     {
         $this->user_agent = $user_agent;
@@ -135,10 +87,6 @@ class ClientContext
         return $this;
     }
 
-    /**
-     * @param  null|string $content
-     * @return ClientContext
-     */
     public function setContent(?string $content): self
     {
         $this->content = $content;
@@ -146,10 +94,6 @@ class ClientContext
         return $this;
     }
 
-    /**
-     * @param  null|string $proxy
-     * @return ClientContext
-     */
     public function setProxy(?string $proxy): self
     {
         $this->proxy = $proxy;
@@ -157,13 +101,9 @@ class ClientContext
         return $this;
     }
 
-    /**
-     * @param  bool $request_fulluri
-     * @return ClientContext
-     */
-    public function requestFullUri(bool $request_fulluri = true): self
+    public function requestFullUri(bool $requestFullUri = true): self
     {
-        $this->request_fulluri = $request_fulluri === true;
+        $this->request_fulluri = $requestFullUri === true;
 
         return $this;
     }
@@ -173,43 +113,27 @@ class ClientContext
         return $this->followLocations(0);
     }
 
-    /**
-     * @param  int $follow_location
-     * @return ClientContext
-     */
-    public function followLocations(int $follow_location): self
+    public function followLocations(int $followLocationCount): self
     {
-        $this->follow_location = $follow_location;
+        $this->follow_location = $followLocationCount;
 
         return $this;
     }
 
-    /**
-     * @param  int $max_redirects
-     * @return ClientContext
-     */
-    public function maxRedirects(int $max_redirects): self
+    public function maxRedirects(int $maxRedirectCount): self
     {
-        $this->max_redirects = $max_redirects;
+        $this->max_redirects = $maxRedirectCount;
 
         return $this;
     }
 
-    /**
-     * @param  string $protocol_version
-     * @return ClientContext
-     */
-    public function setProtocolVersion(string $protocol_version): self
+    public function setProtocolVersion(string $protocolVersion): self
     {
-        $this->protocol_version = $protocol_version;
+        $this->protocol_version = $protocolVersion;
 
         return $this;
     }
 
-    /**
-     * @param  float $timeout
-     * @return ClientContext
-     */
     public function setTimeout(float $timeout): self
     {
         $this->timeout = $timeout;
@@ -217,20 +141,14 @@ class ClientContext
         return $this;
     }
 
-    /**
-     * @param  bool $ignore_errors
-     * @return ClientContext
-     */
-    public function ignoreErrors(bool $ignore_errors = true): self
+    public function ignoreErrors(bool $ignoreErrors = true): self
     {
-        $this->ignore_errors = $ignore_errors === true;
+        $this->ignore_errors = $ignoreErrors === true;
 
         return $this;
     }
 
-    /**
-     * @return resource
-     */
+    /** @return resource */
     public function asContext()
     {
         return stream_context_create($this->asContextOptions());
@@ -262,13 +180,13 @@ class ClientContext
 
     private function getHeaderLine(array $headers = []): string
     {
-        $headerline = '';
+        $line = '';
 
         /** @var Header $header */
         foreach ($headers as $header) {
-            $headerline .= $header->valueLine();
+            $line .= $header->valueLine();
         }
 
-        return $headerline;
+        return $line;
     }
 }
